@@ -2,7 +2,7 @@ import platform
 import os
 from PIL import Image
 # This code is based on the pyheif ver. 0.7.0
-import pyheif
+# import pyheif
 
 # These are supported heif extensions by the library. (https://github.com/carsales/pyheif/blob/master/libheif/heif.h)
 heifExtensions = ["heic", "heix", "hevc", "heim", "heis", "hevm", "hevs", "mif1", "msf1", "avif", "avis"]
@@ -12,6 +12,12 @@ def main():
     files = os.listdir(os.getcwd())
     splitPath = []
     heicFiles = []
+    
+    if osCat.lower() == "windows":
+        import pillow_heif
+    else:
+        import pyheif
+
     for file in files:
         if(osCat.lower() == "windows"):     # Windows
             splitPath = file.split('\\')
