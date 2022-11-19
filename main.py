@@ -12,14 +12,18 @@ def main():
     files = os.listdir(os.getcwd())
     splitPath = []
     heicFiles = []
+    flag = 0
     
     if osCat.lower() == "windows":
+        flag = 1
         import pillow_heif
     else:
+        flag = 0
         import pyheif
 
     for file in files:
-        if(osCat.lower() == "windows"):     # Windows
+        # if(osCat.lower() == "windows"):
+        if(flag == 1):	# Windows
             splitPath = file.split('\\')
         else:   # Mac or Linux
             splitPath = file.split('/')
@@ -27,7 +31,10 @@ def main():
             heicFiles.append(file)
     print(heicFiles)
     for file in heicFiles:
-        heif_file = pyheif.read(file)
+        if(flag == 1):
+            heif_file = pillow_heif.read(file)
+        else:
+            heif_file = pyheif.read(file)
         image = Image.frombytes(
             heif_file.mode, 
             heif_file.size, 
@@ -40,7 +47,7 @@ def main():
         splitPath[-1] = ".jpg"
         savePath = ''.join(splitPath)
         image.save(savePath, "JPEG")
-        print(savePath + "saved!")
+        print(savePath + ": saved!")
 
-if name == "main":
+if __name__ == "__main__":
     main()
