@@ -32,7 +32,7 @@ def main():
     print(heicFiles)
     for file in heicFiles:
         if(flag == 1):
-            heif_file = pillow_heif.read(file)
+            heif_file = pillow_heif.read_heif(file)
         else:
             heif_file = pyheif.read(file)
         image = Image.frombytes(
